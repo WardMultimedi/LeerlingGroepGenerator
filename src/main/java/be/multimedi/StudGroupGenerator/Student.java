@@ -1,4 +1,4 @@
-package be.multimedi;
+package be.multimedi.StudGroupGenerator;
 
 public class Student {
     private Integer id;
@@ -13,6 +13,11 @@ public class Student {
         //TODO Validation
         this.firstName = firstName;
         this.lastName = lastName;
+    }
+
+    public Student(Integer id, String firstName, String lastName) {
+        this(firstName, lastName);
+        this.id = id;
     }
 
     public Integer getId() {

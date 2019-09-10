@@ -1,4 +1,4 @@
-package be.multimedi;
+package be.multimedi.StudGroupGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,7 @@ public class StudentDAO {
             try(Statement stmt = con.createStatement()){
                 ResultSet rs = stmt.executeQuery(sqlGetAllStudents);
                 while(rs.next()){
-                    Student stud = new Student(rs.getString("firstName"), rs.getString("lastName"));
+                    Student stud = new Student(rs.getInt("id"), rs.getString("firstName"), rs.getString("lastName"));
                     list.add(stud);
                 }
             }catch( SQLException se){

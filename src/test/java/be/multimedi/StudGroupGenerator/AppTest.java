@@ -1,4 +1,4 @@
-package be.multimedi;
+package be.multimedi.StudGroupGenerator;
 
 import  org.junit.jupiter.api.*;
 /**
