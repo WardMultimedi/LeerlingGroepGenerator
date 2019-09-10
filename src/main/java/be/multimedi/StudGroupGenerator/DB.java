@@ -17,6 +17,26 @@ class DB {
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC));
 
+CREATE TABLE `javaeeheverleeDB`.`TaskGroups` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  `minStudents` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC));
 
+CREATE TABLE `javaeeheverleeDB`.`StudentGroups` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `taskGroup_id` INT NOT NULL,
+  PRIMARY KEY (`id`));
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC));
+
+CREATE TABLE `javaeeheverleeDB`.`StudentGroupConnections` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `student_id` INT NOT NULL,
+  `studGroup_id` INT NOT NULL,
+  PRIMARY KEY (`id`));
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC));
      */
+
+
 }
