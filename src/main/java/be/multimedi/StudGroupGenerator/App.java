@@ -34,16 +34,16 @@ public class App {
                     showTaskGroup();
                     break;
                 case 3:
-                    //TODO: Create random task group
+                    createRandomTaskGroup();
                     break;
                 case 4:
-                    //TODO: Remove task group
+                    removeTaskGroup();
                     break;
                 case 5:
-                    //TODO: Create Student
+                    createStudent();
                     break;
                 case 6:
-                    //TODO: Remove Student
+                    removeStudent();
                     break;
                 default:
                     running = false;
@@ -68,10 +68,10 @@ public class App {
         if (input.matches("\\d+")) {
             int id = Integer.parseInt(input);
             tg = tgd.getTaskGroup_byID(id);
-            System.out.println("by id");
+            //System.out.println("by id");
         } else {
             tg = tgd.getTaskGroup_byName(input);
-            System.out.println("by Name");
+            //System.out.println("by Name");
         }
         if( tg == null){
             System.out.println("No targetGroups found with id or name " + input);
@@ -94,5 +94,43 @@ public class App {
             System.out.printf("%d) %s\n", i++, names);
         }
         ct.askPressEnterToContinue();
+    }
+
+    private void createRandomTaskGroup(){
+        String name = ct.askUserInputString("TaskGroup name: ",1);
+        int min = ct.askUserInputInteger("minimum of students per group: " ,0);
+        TaskGroupDAO tgd = new TaskGroupDAO();
+        tgd.createTaskGroup(name, min);
+    }
+
+    private void removeTaskGroup(){
+        String input = ct.askUserInputString("Geef de naam of nr van de groep: ", 1);
+        TaskGroupDAO tgd = new TaskGroupDAO();
+        TaskGroup tg;
+        if (input.matches("\\d+")) {
+            int id = Integer.parseInt(input);
+            tgd.removeTaskGroup_byID(id);
+        } else {
+            tgd.removeTaskGroup_byName(input);
+        }
+    }
+
+    private void removeStudent(){
+        String input = ct.askUserInputString("Geef de voornaam of nr van de student: ", 1);
+        StudentDAO sd = new StudentDAO();
+        if (input.matches("\\d+")) {
+            int id = Integer.parseInt(input);
+            sd.removeStudent_byID(id);
+        } else {
+            sd.removeStudent_byFirstName(input);
+        }
+    }
+
+    private void createStudent(){
+        String firstName = ct.askUserInputString("Voornaam: ", 1);
+        String lastName = ct.askUserInputString("achternaam: ", 1);
+        Student stud = new Student(firstName, lastName);
+        StudentDAO sd = new StudentDAO();
+        sd.addStudent(stud);
     }
 }
