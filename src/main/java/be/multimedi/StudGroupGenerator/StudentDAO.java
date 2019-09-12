@@ -72,9 +72,8 @@ public class StudentDAO {
             try(PreparedStatement stmt = con.prepareStatement(sqlGetStudent)){
                 stmt.setInt(1, id);
                 ResultSet rs = stmt.executeQuery();
-                while(rs.next()){
-                    Student stud = new Student(rs.getInt("id"), rs.getString("firstName"), rs.getString("lastName"));
-                    return stud;
+                if(rs.next()){
+                    return new Student(rs.getInt("id"), rs.getString("firstName"), rs.getString("lastName"));
                 }
             }catch( SQLException se){
                 System.out.println("Error while reading Student from DB: " + se.getMessage());

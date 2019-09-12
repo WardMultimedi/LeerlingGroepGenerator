@@ -95,15 +95,14 @@ public class TaskGroupDAO {
             try (PreparedStatement stmt = con.prepareStatement(sqlGetTaskGroup_byName)) {
                 stmt.setString(1, taskGroupName);
                 ResultSet rs = stmt.executeQuery();
-                while (rs.next()) {
+                if (rs.next()) {
                     int taskGroupID = rs.getInt("id");
                     StudentGroupDAO sgd = new StudentGroupDAO();
-                    TaskGroup tg = new TaskGroup(
+                    return new TaskGroup(
                             rs.getInt("id"),
                             rs.getString("name"),
                             rs.getInt("minStudents"),
                             sgd.getStudentGroups_byTaskGroup(taskGroupID));
-                    return tg;
                 }
             } catch (SQLException se) {
                 System.out.println("Error while reading TaskGroup from DB: " + se.getMessage());
@@ -121,12 +120,11 @@ public class TaskGroupDAO {
                 ResultSet rs = stmt.executeQuery();
                 while (rs.next()) {
                     StudentGroupDAO sgd = new StudentGroupDAO();
-                    TaskGroup tg = new TaskGroup(
+                    return new TaskGroup(
                             rs.getInt("id"),
                             rs.getString("name"),
                             rs.getInt("minStudents"),
                             sgd.getStudentGroups_byTaskGroup(taskGroupID));
-                    return tg;
                 }
             } catch (SQLException se) {
                 System.out.println("Error while reading TaskGroup from DB: " + se.getMessage());

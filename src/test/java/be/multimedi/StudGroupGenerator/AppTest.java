@@ -4,13 +4,13 @@ import  org.junit.jupiter.api.*;
 /**
  * Unit test for simple App.
  */
-class AppTest
+public class AppTest
 {
     /**
      * Rigorous Test :-)
      */
     @Test
-    void shouldAnswerWithTrue()
+    public void shouldAnswerWithTrue()
     {
         Assertions.assertTrue( true );
     }
