@@ -1,5 +1,11 @@
 package be.multimedi.StudGroupGenerator;
 
+import be.multimedi.StudGroupGenerator.StudentGroup.StudentGroup;
+import be.multimedi.StudGroupGenerator.TaskGroup.TaskGroup;
+import be.multimedi.StudGroupGenerator.TaskGroup.TaskGroupDAO;
+import be.multimedi.StudGroupGenerator.student.Student;
+import be.multimedi.StudGroupGenerator.student.StudentDAO;
+
 import java.sql.SQLException;
 import java.util.List;
 
@@ -14,7 +20,7 @@ public final class App {
         app.start();
         try {
             DriverManagerWrapper.closeConnection();
-        }catch (SQLException se){
+        } catch (SQLException se) {
             System.out.println("Error while closing DB: " + se.getMessage());
         }
     }
@@ -79,7 +85,7 @@ public final class App {
             tg = tgd.getTaskGroup_byName(input);
             //System.out.println("by Name");
         }
-        if( tg == null){
+        if (tg == null) {
             System.out.println("No targetGroups found with id or name " + input);
             ct.askPressEnterToContinue();
             return;
@@ -102,14 +108,14 @@ public final class App {
         ct.askPressEnterToContinue();
     }
 
-    private void createRandomTaskGroup(){
-        String name = ct.askUserInputString("TaskGroup name: ",1);
-        int min = ct.askUserInputInteger("minimum of students per group: " ,0);
+    private void createRandomTaskGroup() {
+        String name = ct.askUserInputString("TaskGroup name: ", 1);
+        int min = ct.askUserInputInteger("minimum of students per group: ", 0);
         TaskGroupDAO tgd = new TaskGroupDAO();
         tgd.createTaskGroup(name, min);
     }
 
-    private void removeTaskGroup(){
+    private void removeTaskGroup() {
         String input = ct.askUserInputString("Geef de naam of nr van de groep: ", 1);
         TaskGroupDAO tgd = new TaskGroupDAO();
         TaskGroup tg;
@@ -121,7 +127,7 @@ public final class App {
         }
     }
 
-    private void removeStudent(){
+    private void removeStudent() {
         String input = ct.askUserInputString("Geef de voornaam of nr van de student: ", 1);
         StudentDAO sd = new StudentDAO();
         if (input.matches("\\d+")) {
@@ -132,7 +138,7 @@ public final class App {
         }
     }
 
-    private void createStudent(){
+    private void createStudent() {
         String firstName = ct.askUserInputString("Voornaam: ", 1);
         String lastName = ct.askUserInputString("achternaam: ", 1);
         Student stud = new Student(firstName, lastName);

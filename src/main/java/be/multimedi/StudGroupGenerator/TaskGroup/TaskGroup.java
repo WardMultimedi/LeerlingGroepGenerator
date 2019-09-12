@@ -1,4 +1,6 @@
-package be.multimedi.StudGroupGenerator;
+package be.multimedi.StudGroupGenerator.TaskGroup;
+
+import be.multimedi.StudGroupGenerator.StudentGroup.StudentGroup;
 
 import java.util.List;
 

@@ -1,4 +1,8 @@
-package be.multimedi.StudGroupGenerator;
+package be.multimedi.StudGroupGenerator.StudentGroup;
+
+import be.multimedi.StudGroupGenerator.DriverManagerWrapper;
+import be.multimedi.StudGroupGenerator.student.Student;
+import be.multimedi.StudGroupGenerator.student.StudentDAO;
 
 import java.sql.*;
 import java.util.ArrayList;

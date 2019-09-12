@@ -1,4 +1,6 @@
-package be.multimedi.StudGroupGenerator;
+package be.multimedi.StudGroupGenerator.student;
+
+import be.multimedi.StudGroupGenerator.DriverManagerWrapper;
 
 import java.util.ArrayList;
 import java.util.List;

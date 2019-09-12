@@ -65,38 +65,4 @@ public final class ConsoleTool {
       } while (input < minimum || input > maximum);
       return input;
    }
-
-   public LocalDate askUserInputDate(String question) {
-      LocalDate ld = null;
-      do {
-         System.out.print(question);
-         String date = keyboard.nextLine();
-         try {
-            ld = LocalDate.parse(date);
-         } catch (DateTimeParseException dtpe) {
-            System.out.println("Error: " + dtpe.getMessage());
-            System.out.println("Expected format: YYYY-MM-DD");
-         }
-      } while (ld == null);
-      return ld;
-   }
-
-   public LocalDate askUserInputDateBefore(String question, LocalDate maximumDate) {
-      LocalDate ld = askUserInputDate(question);
-      while (ld.isAfter(maximumDate) || ld.isEqual(maximumDate)) {
-         System.out.println("Error: Date must be before " + maximumDate);
-         ld = askUserInputDate(question);
-      }
-      return ld;
-   }
-
-   public LocalDate askUserInputDateBetween(String question, LocalDate minimumDate, LocalDate maximumDate) {
-      LocalDate ld = askUserInputDate(question);
-      while (ld.isBefore(minimumDate) || ld.isEqual(minimumDate) ||
-              ld.isAfter(maximumDate) || ld.isEqual(maximumDate)) {
-         System.out.println("Error: Date must be between " + minimumDate + " and " + maximumDate);
-         ld = askUserInputDate(question);
-      }
-      return ld;
-   }
 }

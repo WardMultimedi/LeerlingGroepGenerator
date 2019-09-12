@@ -1,4 +1,4 @@
-package be.multimedi.StudGroupGenerator;
+package be.multimedi.StudGroupGenerator.student;
 
 public class Student {
     private Integer id;
