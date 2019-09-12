@@ -1,16 +1,22 @@
 package be.multimedi.StudGroupGenerator;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**
  * Hello world!
  */
-public class App {
+public final class App {
     private ConsoleTool ct = new ConsoleTool();
 
     public static void main(String[] args) {
         App app = new App();
         app.start();
+        try {
+            DriverManagerWrapper.closeConnection();
+        }catch (SQLException se){
+            System.out.println("Error while closing DB: " + se.getMessage());
+        }
     }
 
     private void start() {

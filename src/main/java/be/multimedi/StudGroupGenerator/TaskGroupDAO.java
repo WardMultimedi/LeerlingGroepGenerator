@@ -13,7 +13,8 @@ public class TaskGroupDAO {
 
     public void createTaskGroup(String taskGroupName, int taskGroupMinStudents) {
         // Create TaskGroup
-        try (Connection con = DriverManager.getConnection(DB.url, DB.login, DB.pwd)) {
+        try {
+            Connection con = DriverManagerWrapper.getConnection();
             try (PreparedStatement stmt = con.prepareStatement(sqlCreateTaskGroup)) {
                 stmt.setString(1, taskGroupName);
                 stmt.setInt(2, taskGroupMinStudents);
@@ -27,7 +28,8 @@ public class TaskGroupDAO {
         }
         // find the created TaskGroup
         Integer taskGroupID = null;
-        try (Connection con = DriverManager.getConnection(DB.url, DB.login, DB.pwd)) {
+        try {
+            Connection con = DriverManagerWrapper.getConnection();
             try (PreparedStatement stmt = con.prepareStatement(sqlGetTaskGroup_byName)) {
                 stmt.setString(1, taskGroupName);
                 ResultSet rs = stmt.executeQuery();
@@ -40,7 +42,7 @@ public class TaskGroupDAO {
         } catch (SQLException se) {
             System.out.println("Connection to DataBase failed: " + se.getMessage());
         }
-        if( taskGroupID == null ){
+        if (taskGroupID == null) {
             System.out.println("error while getting taskGroupID");
             return;
         }
@@ -54,7 +56,7 @@ public class TaskGroupDAO {
                 int studIndex = (int) (Math.random() * totalStudentList.size());
                 studentGroupList.add(totalStudentList.remove(studIndex));
             }
-            if( i == groups -1){
+            if (i == groups - 1) {
                 studentGroupList.addAll(totalStudentList);
             }
             new StudentGroupDAO().createStudentGroup(taskGroupID, studentGroupList);
@@ -63,7 +65,8 @@ public class TaskGroupDAO {
     }
 
     public void removeTaskGroup_byName(String taskGroupName) {
-        try (Connection con = DriverManager.getConnection(DB.url, DB.login, DB.pwd)) {
+        try {
+            Connection con = DriverManagerWrapper.getConnection();
             try (PreparedStatement stmt = con.prepareStatement(sqlRemoveTaskGroup_byName)) {
                 stmt.setString(1, taskGroupName);
                 int rows = stmt.executeUpdate();
@@ -77,7 +80,8 @@ public class TaskGroupDAO {
     }
 
     public void removeTaskGroup_byID(int taskGroupID) {
-        try (Connection con = DriverManager.getConnection(DB.url, DB.login, DB.pwd)) {
+        try {
+            Connection con = DriverManagerWrapper.getConnection();
             try (PreparedStatement stmt = con.prepareStatement(sqlRemoveTaskGroup_byID)) {
                 stmt.setInt(1, taskGroupID);
                 int rows = stmt.executeUpdate();
@@ -91,7 +95,8 @@ public class TaskGroupDAO {
     }
 
     public TaskGroup getTaskGroup_byName(String taskGroupName) {
-        try (Connection con = DriverManager.getConnection(DB.url, DB.login, DB.pwd)) {
+        try {
+            Connection con = DriverManagerWrapper.getConnection();
             try (PreparedStatement stmt = con.prepareStatement(sqlGetTaskGroup_byName)) {
                 stmt.setString(1, taskGroupName);
                 ResultSet rs = stmt.executeQuery();
@@ -114,7 +119,8 @@ public class TaskGroupDAO {
     }
 
     public TaskGroup getTaskGroup_byID(int taskGroupID) {
-        try (Connection con = DriverManager.getConnection(DB.url, DB.login, DB.pwd)) {
+        try {
+            Connection con = DriverManagerWrapper.getConnection();
             try (PreparedStatement stmt = con.prepareStatement(sqlGetTaskGroup_byID)) {
                 stmt.setInt(1, taskGroupID);
                 ResultSet rs = stmt.executeQuery();

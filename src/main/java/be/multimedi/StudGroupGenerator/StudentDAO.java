@@ -13,94 +13,100 @@ public class StudentDAO {
     private final String sqlRemoveStudent_byID = "DELETE FROM Students where id = ?";
     private final String sqlRemoveStudent_byName = "DELETE FROM Students where firstName LIKE ?";
 
-    public int getStudentCount(){
+    public int getStudentCount() {
         int count = 0;
-        try(Connection con = DriverManager.getConnection(DB.url, DB.login, DB.pwd)){
-            try(Statement stmt = con.createStatement()){
+        try {
+            Connection con = DriverManagerWrapper.getConnection();
+            try (Statement stmt = con.createStatement()) {
                 ResultSet rs = stmt.executeQuery(sqlGetStudentCount);
-                while(rs.next()){
+                while (rs.next()) {
                     count = rs.getInt("count");
                 }
-            }catch( SQLException se){
+            } catch (SQLException se) {
                 System.out.println("Error while reading Student from DB: " + se.getMessage());
             }
-        }catch (SQLException se){
+        } catch (SQLException se) {
             System.out.println("Connection to DataBase failed: " + se.getMessage());
         }
         return count;
     }
 
-    public List<Student> getStudents_byStudentGroup(int studGroupID){
+    public List<Student> getStudents_byStudentGroup(int studGroupID) {
         List<Student> list = new ArrayList<Student>();
-        try(Connection con = DriverManager.getConnection(DB.url, DB.login, DB.pwd)){
-            try(PreparedStatement stmt = con.prepareStatement(sqlGetStudents_byStudentGroup)){
+        try {
+            Connection con = DriverManagerWrapper.getConnection();
+            try (PreparedStatement stmt = con.prepareStatement(sqlGetStudents_byStudentGroup)) {
                 stmt.setInt(1, studGroupID);
                 ResultSet rs = stmt.executeQuery();
-                while(rs.next()){
+                while (rs.next()) {
                     Student stud = new Student(rs.getInt("id"), rs.getString("firstName"), rs.getString("lastName"));
                     list.add(stud);
                 }
-            }catch( SQLException se){
-                System.out.println("Error while reading from DB: " + se.getMessage());
-            }
-        }catch (SQLException se){
-            System.out.println("Connection to DataBase failed: " + se.getMessage());
-        }
-        return list;
-    }
-
-    public List<Student> getAllStudents(){
-        List<Student> list = new ArrayList<Student>();
-        try(Connection con = DriverManager.getConnection(DB.url, DB.login, DB.pwd)){
-            try(Statement stmt = con.createStatement()){
-                ResultSet rs = stmt.executeQuery(sqlGetAllStudents);
-                while(rs.next()){
-                    Student stud = new Student(rs.getInt("id"), rs.getString("firstName"), rs.getString("lastName"));
-                    list.add(stud);
-                }
-            }catch( SQLException se){
-                System.out.println("Error while reading from DB: " + se.getMessage());
-            }
-        }catch (SQLException se){
-            System.out.println("Connection to DataBase failed: " + se.getMessage());
-        }
-        return list;
-    }
-
-    public Student getStudent( int id ){
-        try(Connection con = DriverManager.getConnection(DB.url, DB.login, DB.pwd)){
-            try(PreparedStatement stmt = con.prepareStatement(sqlGetStudent)){
-                stmt.setInt(1, id);
-                ResultSet rs = stmt.executeQuery();
-                if(rs.next()){
-                    return new Student(rs.getInt("id"), rs.getString("firstName"), rs.getString("lastName"));
-                }
-            }catch( SQLException se){
+            } catch (SQLException se) {
                 System.out.println("Error while reading Student from DB: " + se.getMessage());
             }
-        }catch (SQLException se){
+        } catch (SQLException se) {
+            System.out.println("Connection to DataBase failed: " + se.getMessage());
+        }
+        return list;
+    }
+
+    public List<Student> getAllStudents() {
+        List<Student> list = new ArrayList<Student>();
+        try {
+            Connection con = DriverManagerWrapper.getConnection();
+            try (Statement stmt = con.createStatement()) {
+                ResultSet rs = stmt.executeQuery(sqlGetAllStudents);
+                while (rs.next()) {
+                    Student stud = new Student(rs.getInt("id"), rs.getString("firstName"), rs.getString("lastName"));
+                    list.add(stud);
+                }
+            } catch (SQLException se) {
+                System.out.println("Error while reading Student from DB: " + se.getMessage());
+            }
+        } catch (SQLException se) {
+            System.out.println("Connection to DataBase failed: " + se.getMessage());
+        }
+        return list;
+    }
+
+    public Student getStudent(int id) {
+        try {
+            Connection con = DriverManagerWrapper.getConnection();
+            try (PreparedStatement stmt = con.prepareStatement(sqlGetStudent)) {
+                stmt.setInt(1, id);
+                ResultSet rs = stmt.executeQuery();
+                if (rs.next()) {
+                    return new Student(rs.getInt("id"), rs.getString("firstName"), rs.getString("lastName"));
+                }
+            } catch (SQLException se) {
+                System.out.println("Error while reading Student from DB: " + se.getMessage());
+            }
+        } catch (SQLException se) {
             System.out.println("Connection to DataBase failed: " + se.getMessage());
         }
         return null;
     }
 
-    public void addStudent(Student stud){
-        try(Connection con = DriverManager.getConnection(DB.url, DB.login, DB.pwd)){
-            try(PreparedStatement stmt = con.prepareStatement(sqlCreateStudent)){
+    public void addStudent(Student stud) {
+        try {
+            Connection con = DriverManagerWrapper.getConnection();
+            try (PreparedStatement stmt = con.prepareStatement(sqlCreateStudent)) {
                 stmt.setString(1, stud.getFirstName());
                 stmt.setString(2, stud.getLastName());
                 int rows = stmt.executeUpdate();
                 System.out.println("Added " + rows + " Student row(s)");
-            }catch( SQLException se){
+            } catch (SQLException se) {
                 System.out.println("Error while writing Student to DB: " + se.getMessage());
             }
-        }catch (SQLException se){
+        } catch (SQLException se) {
             System.out.println("Connection to DataBase failed: " + se.getMessage());
         }
     }
 
-    public void removeStudent_byID(int studID){
-        try (Connection con = DriverManager.getConnection(DB.url, DB.login, DB.pwd)) {
+    public void removeStudent_byID(int studID) {
+        try {
+            Connection con = DriverManagerWrapper.getConnection();
             try (PreparedStatement stmt = con.prepareStatement(sqlRemoveStudent_byID)) {
                 stmt.setInt(1, studID);
                 int rows = stmt.executeUpdate();
@@ -113,8 +119,9 @@ public class StudentDAO {
         }
     }
 
-    public void removeStudent_byFirstName(String firstName){
-        try (Connection con = DriverManager.getConnection(DB.url, DB.login, DB.pwd)) {
+    public void removeStudent_byFirstName(String firstName) {
+        try {
+            Connection con = DriverManagerWrapper.getConnection();
             try (PreparedStatement stmt = con.prepareStatement(sqlRemoveStudent_byName)) {
                 stmt.setString(1, firstName);
                 int rows = stmt.executeUpdate();
